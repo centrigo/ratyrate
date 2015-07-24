@@ -105,6 +105,7 @@ module Helpers
     targetType   = options[:targetType]   || 'hint'
     targetFormat = options[:targetFormat] || '{score}'
     targetScore  = options[:targetScore]  || ''
+    readOnlyOpts = options[:readonly]     || false
 
     disable_after_rate = options[:disable_after_rate] || false
 
@@ -112,6 +113,7 @@ module Helpers
     if disable_after_rate
       readonly = rating_user.present? ? !rateable_obj.can_rate?(rating_user, dimension) : true
     end
+    readonly = readOnlyOpts if readOnlyOpts
 
     content_tag :div, '', "data-dimension" => dimension, :class => "star", "data-rating" => stars,
                 "data-id" => rateable_obj.id, "data-classname" => rateable_obj.class.name,
